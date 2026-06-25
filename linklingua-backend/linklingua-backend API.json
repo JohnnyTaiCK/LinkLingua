@@ -1,0 +1,853 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Default module",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/api/user/login": {
+      "post": {
+        "summary": "user login",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              },
+              "example": {
+                "username": "string",
+                "password": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "token": {
+                          "type": "string",
+                          "description": "Jwt"
+                        },
+                        "userName": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "loginVO"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ]
+                },
+                "example": {
+                  "code": 200,
+                  "data": {
+                    "id": 9,
+                    "token": "reprehenderit est",
+                    "userName": "Shelia Krajcik"
+                  },
+                  "message": "logged in successfully"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/user/signup": {
+      "post": {
+        "summary": "user signup",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {},
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ]
+                },
+                "example": {
+                  "code": "200",
+                  "data": {},
+                  "message": "successfully signed up!"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/events/{id}": {
+      "get": {
+        "summary": "Get Event by id",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Event id",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "string"
+                        },
+                        "eventStartTime": {
+                          "type": "string"
+                        },
+                        "maxParticipant": {
+                          "type": "integer"
+                        },
+                        "cityId": {
+                          "type": "integer"
+                        },
+                        "cityName": {
+                          "type": "string"
+                        },
+                        "langId": {
+                          "type": "integer"
+                        },
+                        "langName": {
+                          "type": "string"
+                        },
+                        "publishUserId": {
+                          "type": "integer"
+                        },
+                        "image": {
+                          "type": "string"
+                        },
+                        "eventStatus": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "description",
+                        "location",
+                        "eventStartTime",
+                        "maxParticipant",
+                        "cityId",
+                        "cityName",
+                        "langId",
+                        "langName",
+                        "publishUserId",
+                        "image",
+                        "eventStatus"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": "70",
+                  "data": {
+                    "id": 81,
+                    "title": "laughter object mindless after brr our",
+                    "description": "Cras adiuvo appositus amor sonitus demonstro coniecto vito. Sustineo cognomen possimus creator synagoga damno adulatio delibero tabella. Harum placeat mollitia deprimo vilicus vindico volaticus verbum a. Vester recusandae vinum curiositas universe qui quae venustas amet depraedor. Absens possimus adfectus. Ipsa adnuo desipio. Claro tutamen valetudo claudeo cedo celo adipisci ambitus.",
+                    "location": "amet aute Ut adipisicing sit",
+                    "eventStartTime": "2026-05-13 18:36:23",
+                    "maxParticipant": 77,
+                    "cityId": 96,
+                    "cityName": "Mrs. Irene Torp",
+                    "langId": 16,
+                    "langName": "Ramiro Turcotte",
+                    "publishUserId": 12,
+                    "image": "https://loremflickr.com/400/400?lock=2186346745057407",
+                    "eventStatus": 7
+                  },
+                  "message": "irure ea in veniam ad"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/events": {
+      "post": {
+        "summary": "Create New Event",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "eventStartTime": {
+                    "type": "string",
+                    "description": "date-time"
+                  },
+                  "maxParticipant": {
+                    "type": "integer"
+                  },
+                  "publishUserId": {
+                    "type": "integer"
+                  },
+                  "cityId": {
+                    "type": "integer"
+                  },
+                  "langId": {
+                    "type": "integer"
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "description",
+                  "location",
+                  "eventStartTime",
+                  "maxParticipant",
+                  "cityId",
+                  "langId",
+                  "image",
+                  "publishUserId"
+                ]
+              },
+              "example": {
+                "title": "digital kookily qua etch worldly",
+                "description": "Utpote allatus spectaculum clibanus. Supra voluptates eaque delectus cura praesentium aqua caries arbor terra. Vulgivagus tracto argumentum expedita aer tardus facilis. Pax denique patior cupiditas deorsum solvo caelum sono.",
+                "location": "laboris elit cupidatat",
+                "eventStartTime": "2025-10-02 14:28",
+                "maxParticipant": 64,
+                "publishUserId": 22,
+                "cityId": 86,
+                "langId": 86,
+                "image": "https://loremflickr.com/400/400?lock=638354593843976"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ]
+                },
+                "example": {
+                  "code": 200,
+                  "data": "string",
+                  "message": "string"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "Delete an event by Id",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "ids",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ]
+                },
+                "example": {
+                  "code": 16,
+                  "message": "adipisicing",
+                  "data": "sit mollit fugiat aute"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "Edit an event by Id",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "eventStartTime": {
+                    "type": "string",
+                    "description": "date-time"
+                  },
+                  "maxParticipant": {
+                    "type": "integer"
+                  },
+                  "cityId": {
+                    "type": "integer"
+                  },
+                  "langId": {
+                    "type": "integer"
+                  },
+                  "publishUserId": {
+                    "type": "integer"
+                  },
+                  "eventStatus": {
+                    "type": "integer"
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              },
+              "example": {
+                "id": 56,
+                "title": "calmly during mockingly frenetically hence scarily",
+                "description": "Subnecto candidus mollitia clarus voluptatibus. Tempora aperiam possimus. Uterque confero terga certus cariosus amo arca clamo venia vomito. Appono terebro caelum amita coma despecto. Minus velociter at consequatur accedo creber deputo. In curatio quos confido comminor acidus cervus magni.",
+                "location": "deserunt enim voluptate",
+                "eventStartTime": "2025-06-11 18:46:32",
+                "maxParticipant": 1,
+                "cityId": 54,
+                "langId": 38,
+                "publishUserId": 90,
+                "eventStatus": 68,
+                "image": "https://loremflickr.com/400/400?lock=541946979847707"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/events/page": {
+      "get": {
+        "summary": "Events pagination search",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 46,
+                  "message": "reprehenderit non anim in mollit",
+                  "data": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/common/upload": {
+      "post": {
+        "summary": "file upload",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "multipart/form-data",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "type": "string",
+                    "description": "image file",
+                    "example": ""
+                  }
+                }
+              },
+              "example": {
+                "file": ""
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/city": {
+      "get": {
+        "summary": "Get list of cities",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "cityName": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "cityName"
+                        ]
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": "67",
+                  "data": [
+                    {
+                      "id": "50",
+                      "cityName": "Francisco Stehr"
+                    }
+                  ],
+                  "message": "quis deserunt"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/language/list": {
+      "get": {
+        "summary": "Get list of languages",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "languageName": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "languageName"
+                        ]
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}
