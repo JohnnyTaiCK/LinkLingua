@@ -1,0 +1,10 @@
+target/
+uploads/
+.idea/
+.cursor/
+*.iml
+*.log
+.DS_Store
+.git
+README.md
+linklingua-backend API.json

@@ -37,6 +37,14 @@ public class CommonController {
     @Value("${linklingua.upload.url-prefix}")
     private String uploadUrlPrefix;
 
+    /**
+     * Host part prepended to returned file URLs. Defaults to the local dev host;
+     * set to an empty string in production so URLs are returned relative
+     * (e.g. {@code /uploads/xxx}) and resolved via the reverse proxy.
+     */
+    @Value("${linklingua.upload.public-base:http://localhost:8080}")
+    private String uploadPublicBase;
+
     @PostMapping("/upload")
     @Operation(summary = "Upload file", description = "Upload an image file and return its accessible URL")
     public Result<String> upload(@RequestParam("file") MultipartFile file) {
@@ -62,7 +70,7 @@ public class CommonController {
         }
 
         // Return the public URL that maps to the stored file.
-        String url = "http://localhost:8080" +
+        String url = uploadPublicBase +
                 (uploadUrlPrefix.endsWith("/") ? uploadUrlPrefix : uploadUrlPrefix + "/") + fileName;
         return Result.success(url);
     }

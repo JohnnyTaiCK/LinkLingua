@@ -5,7 +5,9 @@ import { getToken, clearAuth } from './auth';
 
 // 1. 创建axios实例
 const request = axios.create({
-  baseURL: 'http://localhost:8080/api', // 后端接口根地址
+  // 部署时通过 VITE_API_BASE_URL 注入（如 "/api" 走 nginx 反向代理）；
+  // 本地开发缺省回退到后端地址，行为保持不变。
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api', // 后端接口根地址
   timeout: 10000, // 超时时间 10秒
 });
 

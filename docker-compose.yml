@@ -1,0 +1,78 @@
+# ============================================================
+# LinkLingua full-stack deployment
+#   db       -> MySQL 8.0 (initialised from ./db)
+#   backend  -> Spring Boot API (linklingua-backend)
+#   frontend -> React build served by nginx + reverse proxy (linklingua-frontend)
+#
+# Quick start:
+#   docker compose up -d --build
+#   App:     http://localhost
+#   API:     http://localhost/api  (proxied to backend)
+#   Swagger: http://localhost:8080/swagger-ui.html
+#
+# Override secrets/ports via a .env file or your shell environment.
+# ============================================================
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: linklingua-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-linklingua}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-linklingua}
+      TZ: Asia/Shanghai
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      # Init script runs only on first start (empty data volume).
+      # The repo file is named "db" with no extension, so mount it as *.sql.
+      - ./db:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${MYSQL_ROOT_PASSWORD:-linklingua}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  backend:
+    build:
+      context: ./linklingua-backend
+    container_name: linklingua-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Spring Boot relaxed binding maps these to spring.datasource.* etc.
+      SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/${MYSQL_DATABASE:-linklingua}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true"
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:-root}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_ROOT_PASSWORD:-linklingua}
+      # JWT secret (HS256 needs >= 32 bytes). Override in real deployments.
+      LINKLINGUA_JWT_SECRET: ${JWT_SECRET:-ca55a4bff90cf6a8b0b42da69317972b14aa02dd8d8c21ad955704a4126832b8}
+      # Persisted upload directory (mounted volume below)
+      LINKLINGUA_UPLOAD_DIR: /app/uploads
+      # Empty base => upload API returns relative URLs (/uploads/xxx) served via the proxy
+      LINKLINGUA_UPLOAD_PUBLIC_BASE: ""
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    volumes:
+      - uploads-data:/app/uploads
+
+  frontend:
+    build:
+      context: ./linklingua-frontend
+      args:
+        # Talk to the backend through this nginx instance (same origin, no CORS)
+        VITE_API_BASE_URL: /api
+    container_name: linklingua-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+
+volumes:
+  mysql-data:
+  uploads-data:
